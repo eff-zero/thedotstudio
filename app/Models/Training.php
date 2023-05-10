@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Training extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'quotas',
+        'start_hour',
+        'end_hour',
+        'day',
+    ];
 }

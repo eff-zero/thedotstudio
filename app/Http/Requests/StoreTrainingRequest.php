@@ -13,7 +13,7 @@ class StoreTrainingRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth()->user()->id == 1;
     }
 
     /**
@@ -24,7 +24,20 @@ class StoreTrainingRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'       => 'required',
+            'quotas'     => 'required',
+            'start_hour' => ['required', 'date_format:H:i'],
+            'end_hour'   => ['required', 'date_format:H:i', 'after:start_hour'],
+            'day'        => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) {
+                    $dayOfWeek = date('N', strtotime($value));
+                    if ($dayOfWeek >= 6) {
+                        $fail('Solo se pueden seleccionar días de lunes a viernes.');
+                    }
+                }
+            ],
         ];
     }
 }

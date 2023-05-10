@@ -8,6 +8,12 @@ use App\Models\Training;
 
 class TrainingController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('checkUserId')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +21,8 @@ class TrainingController extends Controller
      */
     public function index()
     {
-        //
+        $trainings = Training::all();
+        return view('training.index', compact('trainings'));
     }
 
     /**
@@ -25,7 +32,7 @@ class TrainingController extends Controller
      */
     public function create()
     {
-        //
+        return view('training.create');
     }
 
     /**
@@ -36,7 +43,8 @@ class TrainingController extends Controller
      */
     public function store(StoreTrainingRequest $request)
     {
-        //
+        Training::create($request->all());
+        return redirect()->route('trainings.index')->with('success', 'Se ha creado una nueva capacitación');
     }
 
     /**

@@ -17,9 +17,9 @@ class CreateTrainingsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('quotas')->unsigned();
-            $table->time('start_date');
-            $table->time('end_date');
-            $table->integer('day');
+            $table->time('start_hour');
+            $table->time('end_hour');
+            $table->date('day');
             $table->softDeletes();
             $table->timestamps();
         });
